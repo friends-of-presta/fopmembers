@@ -6,7 +6,6 @@
 
 {block name='page_content'}
     {if $customers}
-        <h1>FoP Members</h1>
         <ul>
             {foreach $customers as $customer}
                 <li>
