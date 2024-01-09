@@ -38,7 +38,7 @@ class FopMembers extends Module
 
     public function getFoPMembers()
     {
-        $customerIds = $this->getCustomersByGroupId(3);
+        $customerIds = $this->getCustomersByGroupId(6);
         // Load customer objects
         $customers = [];
         if ($customerIds) {
