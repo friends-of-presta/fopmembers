@@ -1,7 +1,7 @@
 {extends file='customer/page.tpl'}
 
 {block name='page_title'}
-  {l s='Jobs' mod='crea_webtoprint'}
+  {l s='FoP Members' mod='fopmembers'}
 {/block}
 
 {block name='page_content'}
