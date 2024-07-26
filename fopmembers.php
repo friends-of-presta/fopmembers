@@ -26,7 +26,7 @@ class FopMembers extends Module
     {
         $this->name = 'fopmembers';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Friends of Presta';
         $this->need_instance = 0;
 
@@ -36,9 +36,41 @@ class FopMembers extends Module
         $this->description = $this->l('Display customers of group adherents.');
     }
 
+    public function install()
+    {
+        if (!parent::install()
+            || !$this->registerHook('moduleRoutes')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function hookModuleRoutes($params)
+    {
+        $id_lang = $this->context->language->id;
+        $alias = 'annuaire-fop';
+
+        return [
+            'module-' . $this->name . '-list' => [
+                'controller' => 'list',
+                'rule' => $alias,
+                'keywords' => [
+                    'controller' => [
+                        'regexp' => $alias,
+                    ],
+                ],
+                'params' => [
+                    'fc' => 'module',
+                    'module' => $this->name,
+                ],
+            ],
+        ];
+    }
+
     public function getFoPMembers()
     {
-        $customerIds = $this->getCustomersByGroupId(6);
+        $customerIds = $this->getCustomersByGroupId($this->getGroupMembersId());
         // Load customer objects
         $customers = [];
         if ($customerIds) {
@@ -46,9 +78,9 @@ class FopMembers extends Module
                 $customer = new Customer($customerId);
                 $customers[$customerId] = $customer->getFields();
                 $id_address = Address::getFirstCustomerAddressId($customerId);
-                if((int)$id_address>0){
+                if ((int) $id_address > 0) {
                     $address = new Address($id_address);
-                    $customers[$customerId]['postcode'] = substr($address->postcode, 0,2);
+                    $customers[$customerId]['postcode'] = substr($address->postcode, 0, 2);
                     $customers[$customerId]['city'] = $address->city;
                     $customers[$customerId]['country'] = Country::getNameById(Context::getContext()->language->id, $address->id_country);
                     unset($address);
@@ -79,5 +111,18 @@ class FopMembers extends Module
         }
 
         return $customerIds;
+    }
+
+    // Get group id for members of the year
+    public function getGroupMembersId()
+    {
+        $groups = Group::getGroups($this->context->language->id);
+        foreach ($groups as $group) {
+            if (preg_match('/' . date('Y') . '/', $group['name'])) {
+                return $group['id_group'];
+            }
+        }
+
+        return false;
     }
 }
