@@ -81,3 +81,17 @@ class FopMembers extends Module
         return $customerIds;
     }
 }
+  return $customerIds;
+    }
+
+    // Get group id for members of the year
+    public function getGroupMembersId()
+    {
+        $groups = Group::getGroups($this->context->language->id);
+        foreach ($groups as $group) {
+            if (preg_match('/' . date('Y') . '/', $group['name'])) {
+                return $group['id_group'];
+            }
+        }
+    }
+}

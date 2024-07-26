@@ -16,3 +16,6 @@ class fopmembersListModuleFrontController extends ModuleFrontController
         $this->setTemplate('module:fopmembers/views/templates/front/list.tpl');
     }
 }
+s/templates/front/list.tpl');
+    }
+}
