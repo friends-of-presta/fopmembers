@@ -21,6 +21,6 @@
             {/foreach}
         </ul>
     {else}
-        <p>Nothing here</p>
+        <p>{l s='If you'd like to be the first to appear in our directory, all you have to do is join our association. Don't delay!' mod='fopmembers'}</p>
     {/if}
 {/block}

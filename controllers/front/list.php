@@ -6,7 +6,7 @@ class fopmembersListModuleFrontController extends ModuleFrontController
     {
         parent::initContent();
 
-        // Load customers of group ID 4
+        // Loading of association members up to date with current year's fees
         $customers = $this->module->getFoPMembers();
 
         // Assign customers to the template
@@ -14,8 +14,5 @@ class fopmembersListModuleFrontController extends ModuleFrontController
 
         // Set template
         $this->setTemplate('module:fopmembers/views/templates/front/list.tpl');
-    }
-}
-s/templates/front/list.tpl');
     }
 }
