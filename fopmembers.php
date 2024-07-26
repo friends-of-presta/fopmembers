@@ -44,7 +44,15 @@ class FopMembers extends Module
         if ($customerIds) {
             foreach ($customerIds as $customerId) {
                 $customer = new Customer($customerId);
-                $customers[] = $customer->getFields();
+                $customers[$customerId] = $customer->getFields();
+                $id_address = Address::getFirstCustomerAddressId($customerId);
+                if((int)$id_address>0){
+                    $address = new Address($id_address);
+                    $customers[$customerId]['postcode'] = substr($address->postcode, 0,2);
+                    $customers[$customerId]['city'] = $address->city;
+                    $customers[$customerId]['country'] = Country::getNameById(Context::getContext()->language->id, $address->id_country);
+                    unset($address);
+                }
             }
         }
 

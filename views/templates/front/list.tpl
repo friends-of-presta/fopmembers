@@ -12,8 +12,9 @@
                     <h2>{$customer.company}</h2>
                     <p>
                     <strong>{$customer.lastname} {$customer.firstname}</strong>
+                    <br />{$customer.postcode} {$customer.city} - {$customer.country}<br />
                     {if $customer.website}
-                        <br/><a href="{$customer.website}">{$customer.website}</a>
+                        <a href="{$customer.website}">{$customer.website}</a>
                     {/if}
                     </p>
                 </li>
